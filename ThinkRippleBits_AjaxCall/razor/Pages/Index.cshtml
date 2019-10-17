@@ -1,0 +1,54 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Calling Ajax Made Clean";
+}
+
+<script src="~/js/index.js" asp-append-version="true"></script>
+
+
+<h1 class="m-3">@ViewData["Title"]</h1>
+
+
+<div class="card m-3">
+    <div class="card-body">
+        Make AJAX calls clean:
+        <code>CallAjax(uri, params, DoClick_OnSuccess);</code>
+
+        <pre class="pre-scrollable">
+            <code>
+                function CallAjax(url, params, success, error, type) {
+                    url = (typeof url === 'string') ? url : "";
+                    params = params || {};
+                    success = success || defaultSuccessFunction;
+                    error = error || defaultErrorFunction;
+                    type = type || 'GET';
+
+                    var respObj = $.ajax({
+                        type: type,
+                        url: url,
+                        data: params,
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: success,
+                        error: error
+                    });
+                    return respObj;
+                }
+
+                var defaultSuccessFunction = function (xml, status, xhr) { };
+                var defaultErrorFunction = function (XMLHttpRequest, textStatus, errorThrown) {
+                    console.log("Status: " + textStatus);
+                    console.log("Error: " + errorThrown);
+                };
+            </code>
+        </pre>
+        <button class="btn btn-primary" onclick="DoClick();">Test Run</button>
+    </div>
+</div>
+
+<div class="card m-3">
+    <div class="card-body">
+        <samp id="result"></samp>
+    </div>
+</div>
